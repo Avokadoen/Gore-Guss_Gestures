@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://cf3jn7axeyyuq"]
+
+[ext_resource type="PackedScene" uid="uid://brfwky6yfn5fk" path="res://player.tscn" id="1_5lcmk"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ym5g8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_itxwc"]
+albedo_color = Color(0.498039, 0.466667, 0.501961, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_b1qeq"]
+material = SubResource("StandardMaterial3D_itxwc")
+size = Vector3(10, 2, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dsbm4"]
+size = Vector3(10, 2, 10)
+
+[node name="Root" type="Node"]
+
+[node name="SkyLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.64679, 0.762668, 0, -0.762668, 0.64679, 0, 7.93391, 0)
+light_energy = 1.646
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("1_5lcmk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.35921, 0)
+
+[node name="TempPlatform" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_ym5g8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TempPlatform"]
+mesh = SubResource("BoxMesh_b1qeq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TempPlatform"]
+shape = SubResource("BoxShape3D_dsbm4")
