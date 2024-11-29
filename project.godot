@@ -68,3 +68,7 @@ debug_exit={
 [layer_names]
 
 3d_render/layer_1="Character"
+3d_physics/layer_1="Meat"
+3d_physics/layer_2="Metal"
+3d_physics/layer_3="Stone"
+3d_physics/layer_11="Pickupable"

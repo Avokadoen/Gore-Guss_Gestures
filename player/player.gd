@@ -1,5 +1,16 @@
 extends CharacterBody3D
 
+# TODO: 
+# - ragdoll (waiting on model): https://docs.godotengine.org/en/stable/tutorials/physics/ragdoll_system.html
+# - interaction handling
+# 	- sharp weapon: able to freely move a sword using mouse
+# 		- slicing on high velocity impact, deformation on low vel impact: https://github.com/PiCode9560/Godot-4-Concave-Mesh-Slicer/tree/main
+# 	- able to drop any held item and pick up new item
+# 	- can control both hands (left and right mouse click)
+# 	- blunt weapon: 
+# 	- magic?
+# 	- env (doors, chests)
+
 # How fast the player moves in meters per second.
 @export var move_speed: float = 100
 
@@ -30,7 +41,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-		# handle turning 
+	# handle turning 
 	if turn_angle != Vector2.ZERO:
 		turn_angle *= turn_rate
 		rotate_y(-turn_angle.x)
@@ -84,6 +95,7 @@ func _physics_process(delta) -> void:
 	if Input.is_action_pressed("jump") and is_on_floor():
 		target_velocity.y += jump_height
 	
+	# Apply all input so far for this frame
 	velocity = target_velocity
 	
 	# Apply gravity
