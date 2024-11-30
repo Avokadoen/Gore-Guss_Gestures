@@ -28,7 +28,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00470787, -1.04722, -0.011
 shape = SubResource("CylinderShape3D_54x3g")
 
 [node name="RockStatic" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28348, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.116176, 0)
 collision_layer = 132
 collision_mask = 0
 
@@ -39,9 +39,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0938475, 0.427143, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.194885, 0.097168, 0.00970459)
 shape = SubResource("BoxShape3D_knvd7")
 
-[node name="ArenaWalls" type="Area3D" parent="."]
-collision_layer = 132
-collision_mask = 0
+[node name="ArenaWalls" type="StaticBody3D" parent="."]
 
 [node name="WallSection0" type="CollisionShape3D" parent="ArenaWalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.305786, 3.45664, 13.3888)
@@ -88,7 +86,7 @@ transform = Transform3D(-0.722896, 0, 0.690958, 0, 1, 0, -0.690958, 0, -0.722896
 shape = SubResource("BoxShape3D_24pqw")
 
 [node name="WallSection11" type="CollisionShape3D" parent="ArenaWalls"]
-transform = Transform3D(-0.98139, 0, 0.192025, 0, 1, 0, -0.192025, 0, -0.98139, 1.57899, 3.93514, -14.1292)
+transform = Transform3D(-0.997471, 0, 0.0710794, 0, 1, 0, -0.0710794, 0, -0.997471, 1.33571, 3.93514, -14.0843)
 shape = SubResource("BoxShape3D_24pqw")
 
 [node name="WallSection12" type="CollisionShape3D" parent="ArenaWalls"]

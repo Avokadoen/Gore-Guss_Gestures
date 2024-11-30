@@ -2,6 +2,7 @@ extends Node3D
 
 signal died
 signal toggle_right_hand_reach
+signal toggle_grip_right_hand
 
 @export var max_health: float = 100
 
@@ -15,7 +16,6 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	
 	is_alive = is_alive and health > 0
 	
 	if is_alive == false:
@@ -25,3 +25,7 @@ func _process(_delta: float) -> void:
 
 func _on_player_toggle_right_hand_reach() -> void:
 	toggle_right_hand_reach.emit()
+
+
+func _on_player_toggle_grip_right_hand() -> void:
+	toggle_grip_right_hand.emit()
