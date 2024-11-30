@@ -11,6 +11,7 @@ func _on_gus_toggle_grip_right_hand() -> void:
 		
 		gripped.freeze = false
 		gripped.reparent(gripped_prev_root)
+		gripped = null
 		return
 
 	if has_overlapping_bodies() == false:

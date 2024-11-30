@@ -32,6 +32,12 @@ signal toggle_grip_right_hand
 # Name of the head bone of the player model skeleton
 @export var player_skeleton_head_name = "Head.001"
 
+@export var relative_crouch_height: float = 0.4
+
+var is_crouch: bool = false
+var capsule_original_height: float = 0
+var player_capsule: CollisionShape3D
+
 var gus_skeleton: Skeleton3D
 var gus_head_id: int
 
@@ -51,6 +57,8 @@ func _ready() -> void:
 	# ensure player camera is used as active camera
 	var main_camera: Camera3D = get_node("Gus_01/Main_Rig/Skeleton3D/HeadAttachment/EyeCamera")
 	main_camera.make_current()
+	
+	player_capsule = get_node("PlayerCapsule")
 
 
 func _process(_delta: float) -> void:
@@ -78,6 +86,17 @@ func _process(_delta: float) -> void:
 			gus_skeleton.set_bone_pose_rotation(gus_head_id, Quaternion.from_euler(head_euler_rotation))
 		
 		turn_angle = Vector2.ZERO
+		
+	# handle crouch 
+	if Input.is_action_pressed("crouch"):
+		is_crouch = !is_crouch
+		var capsule_res = player_capsule.shape as CapsuleShape3D
+		if is_crouch:
+			capsule_original_height = capsule_res.height
+			capsule_res.height = capsule_original_height * relative_crouch_height
+		else:
+			capsule_res.height = capsule_original_height
+			position.y += (capsule_original_height - capsule_res.height) * 0.5
 		
 	if Input.is_action_just_pressed("interactive_action_right_hand"):
 		toggle_right_hand_reach.emit()
