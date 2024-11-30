@@ -24,18 +24,24 @@ extends CharacterBody3D
 @export var fly_speed_multiplier: float = 0.5
 
 # Changes how far the player can look up and down
-@export var look_x_degree_limit: float = 90
+@export var look_x_degree_limit_min: float = -90
+@export var look_x_degree_limit_max: float = 75
 
-# Changes how fast player can move while in air
-@export var camera_node: Camera3D
+# Name of the head bone of the player model skeleton
+@export var player_skeleton_head_name = "Head.001"
+
+var gus_skeleton: Skeleton3D
+var gus_head_id: int
 
 var orientation: Transform3D = Transform3D()
-
 var turn_angle: Vector2 = Vector2.ZERO
-
 var target_velocity: Vector3 = Vector3.ZERO
 
 func _ready() -> void:
+	gus_skeleton = get_node("Gus_01/Main_Rig/Skeleton3D")
+	gus_head_id = gus_skeleton.find_bone(player_skeleton_head_name)
+	
+	
 	orientation = global_transform
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -46,13 +52,15 @@ func _process(_delta: float) -> void:
 		turn_angle *= turn_rate
 		rotate_y(-turn_angle.x)
 		
-		var x_rotation_limit = deg_to_rad(look_x_degree_limit)
-		var is_higher_than_min_limit = camera_node.rotation.x >= -x_rotation_limit 
-		var is_lower_than_max_limit = camera_node.rotation.x <= x_rotation_limit
+		var head_euler_rotation: Vector3 = gus_skeleton.get_bone_pose_rotation(gus_head_id).get_euler(EULER_ORDER_YXZ)
+		var x_rotation_limit_min: float = deg_to_rad(look_x_degree_limit_min)
+		var x_rotation_limit_max: float = deg_to_rad(look_x_degree_limit_max)
+		
+		var is_higher_than_min_limit: bool =  head_euler_rotation.x >= x_rotation_limit_min 
+		var is_lower_than_max_limit: bool = head_euler_rotation.x <= x_rotation_limit_max
 		if (is_higher_than_min_limit and is_lower_than_max_limit):
-			var camera_rotation = camera_node.get_rotation()
-			camera_rotation.x = clamp(camera_rotation.x - turn_angle.y, -x_rotation_limit + 0.001, x_rotation_limit - 0.001)
-			camera_node.set_rotation(camera_rotation)
+			head_euler_rotation.x = clamp(head_euler_rotation.x + turn_angle.y, x_rotation_limit_min + 0.1, x_rotation_limit_max - 0.1)
+			gus_skeleton.set_bone_pose_rotation(gus_head_id, Quaternion.from_euler(head_euler_rotation))
 		
 		turn_angle = Vector2.ZERO
 	
@@ -64,8 +72,8 @@ func _physics_process(delta) -> void:
 	# We create a local variable to store the input direction.
 	var move_direction = Vector3.ZERO
 	
-	var forward_vector = -global_transform.basis.z
-	var right_vector = global_transform.basis.x
+	var forward_vector = global_transform.basis.z
+	var right_vector = -global_transform.basis.x
 	
 	# We check for each move input and update the direction accordingly.
 	if Input.is_action_pressed("forward"):

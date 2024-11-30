@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4drcmja44hfp"]
+
+[ext_resource type="PackedScene" uid="uid://tgkk4xsn2ty8" path="res://player/Gus_01.glb" id="1_4vbcx"]
+
+[node name="Gus_01" instance=ExtResource("1_4vbcx")]
+
+[node name="Skeleton3D" parent="Main_Rig" index="0"]
+bones/7/rotation = Quaternion(-0.128525, 0.000474975, 0.000474975, 0.999475)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Main_Rig/Skeleton3D" index="1"]
+transform = Transform3D(0.999999, -0.00105528, 0.000814986, 0.000874257, 0.980444, 0.196797, -0.00100672, -0.196796, 0.980444, -8.88178e-16, 0.755425, -0.0759844)
+bone_name = "Head.001"
+bone_idx = 7
+
+[node name="EyeCamera" type="Camera3D" parent="Main_Rig/Skeleton3D/BoneAttachment3D" index="0"]
+transform = Transform3D(-1, 1.89175e-10, -8.73115e-08, 1.45519e-11, 1, 1.49012e-08, 8.74279e-08, 0, -1, 1.14447e-05, 0.234429, 0.289508)
