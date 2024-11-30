@@ -5,9 +5,12 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kcjcf"]
 radius = 0.3
+height = 1.85
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.946907, 0)
+collision_layer = 1287
+collision_mask = 128
 script = ExtResource("1_34cwl")
 move_speed = 10.0
 
@@ -15,6 +18,9 @@ move_speed = 10.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.853642, 0)
 
 [node name="PlayerCapsule" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0344368, 0)
 shape = SubResource("CapsuleShape3D_kcjcf")
 
 [node name="Pivot" type="Node3D" parent="."]
+
+[connection signal="died" from="Gus_01" to="." method="_on_gus_01_died"]

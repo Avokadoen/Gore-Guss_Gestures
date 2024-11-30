@@ -76,4 +76,11 @@ debug_exit={
 3d_physics/layer_1="Meat"
 3d_physics/layer_2="Metal"
 3d_physics/layer_3="Stone"
+3d_physics/layer_8="Env"
+3d_physics/layer_9="CharacterCapsule"
+3d_physics/layer_10="Ragdoll"
 3d_physics/layer_11="Pickupable"
+
+[rendering]
+
+environment/defaults/default_clear_color=Color(0.063073, 0.621253, 0.894645, 1)

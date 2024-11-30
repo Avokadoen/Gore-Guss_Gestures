@@ -33,6 +33,8 @@ extends CharacterBody3D
 var gus_skeleton: Skeleton3D
 var gus_head_id: int
 
+var is_dead: bool = false
+
 var orientation: Transform3D = Transform3D()
 var turn_angle: Vector2 = Vector2.ZERO
 var target_velocity: Vector3 = Vector3.ZERO
@@ -40,19 +42,30 @@ var target_velocity: Vector3 = Vector3.ZERO
 func _ready() -> void:
 	gus_skeleton = get_node("Gus_01/Main_Rig/Skeleton3D")
 	gus_head_id = gus_skeleton.find_bone(player_skeleton_head_name)
-	
-	
+
 	orientation = global_transform
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
+	# ensure player camera is used as active camera
+	var main_camera: Camera3D = get_node("Gus_01/Main_Rig/Skeleton3D/BoneAttachment3D/EyeCamera")
+	main_camera.make_current()
 
 
 func _process(_delta: float) -> void:
+	# DEBUG: exit on presumably "esc" 
+	if Input.is_action_just_pressed("debug_exit"):
+		get_tree().quit()
+		return
+		
+	if is_dead:
+		return
+	
 	# handle turning 
 	if turn_angle != Vector2.ZERO:
 		turn_angle *= turn_rate
 		rotate_y(-turn_angle.x)
 		
-		var head_euler_rotation: Vector3 = gus_skeleton.get_bone_pose_rotation(gus_head_id).get_euler(EULER_ORDER_YXZ)
+		var head_euler_rotation: Vector3 = gus_skeleton.get_bone_pose_rotation(gus_head_id).normalized().get_euler(EULER_ORDER_YXZ)
 		var x_rotation_limit_min: float = deg_to_rad(look_x_degree_limit_min)
 		var x_rotation_limit_max: float = deg_to_rad(look_x_degree_limit_max)
 		
@@ -64,11 +77,11 @@ func _process(_delta: float) -> void:
 		
 		turn_angle = Vector2.ZERO
 	
-	# DEBUG: exit on presumably "esc" 
-	if Input.is_action_just_pressed("debug_exit"):
-		get_tree().quit()
 
 func _physics_process(delta) -> void:
+	if is_dead:
+		return
+	
 	# We create a local variable to store the input direction.
 	var move_direction = Vector3.ZERO
 	
@@ -115,3 +128,8 @@ func _physics_process(delta) -> void:
 func _input(event):
 	if event is InputEventMouseMotion:
 		turn_angle += event.relative
+
+
+func _on_gus_01_died() -> void:
+	get_node("PlayerCapsule").disabled = true
+	is_dead = true
