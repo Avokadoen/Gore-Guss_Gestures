@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cf3jn7axeyyuq"]
+[gd_scene load_steps=6 format=3 uid="uid://cf3jn7axeyyuq"]
 
 [ext_resource type="PackedScene" uid="uid://brfwky6yfn5fk" path="res://player.tscn" id="1_5lcmk"]
 [ext_resource type="PackedScene" uid="uid://btjf7rrvndrvg" path="res://weapon/Sword.tscn" id="2_ursj5"]
 [ext_resource type="PackedScene" uid="uid://0omksqhtuit3" path="res://player/gus.tscn" id="3_vywaw"]
 [ext_resource type="PackedScene" uid="uid://b4juu33oqbfsy" path="res://arena/arena.tscn" id="4_d22uo"]
+[ext_resource type="PackedScene" uid="uid://da2ybtiwxg4cx" path="res://pause_menu.tscn" id="5_2p8yx"]
 
 [node name="Root" type="Node"]
 
@@ -25,3 +26,7 @@ transform = Transform3D(-0.99756, 0, -0.0698088, 0, 1, 0, 0.0698088, 0, -0.99756
 max_health = 0.0
 
 [node name="ArenaStatic" parent="." instance=ExtResource("4_d22uo")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("5_2p8yx")]
