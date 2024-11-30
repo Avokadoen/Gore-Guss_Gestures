@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://brfwky6yfn5fk" path="res://player.tscn" id="1_5lcmk"]
 [ext_resource type="PackedScene" uid="uid://btjf7rrvndrvg" path="res://weapon/Sword.tscn" id="2_ursj5"]
 [ext_resource type="PackedScene" uid="uid://0omksqhtuit3" path="res://player/gus.tscn" id="3_vywaw"]
-[ext_resource type="PackedScene" path="res://arena/arena.tscn" id="4_d22uo"]
+[ext_resource type="PackedScene" uid="uid://b4juu33oqbfsy" path="res://arena/arena.tscn" id="4_d22uo"]
 
 [node name="Root" type="Node"]
 
@@ -15,10 +15,10 @@ shadow_enabled = true
 [node name="Player" parent="." instance=ExtResource("1_5lcmk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45637, -10.7802)
 turn_rate = 0.001
-look_x_degree_limit_max = 69.395
+look_x_degree_limit_max = 50.0
 
 [node name="Sword" parent="." instance=ExtResource("2_ursj5")]
-transform = Transform3D(0.00112018, -0.999729, 0.0232361, 0.0481395, 0.0232631, 0.99857, -0.99884, 0, 0.0481525, 0.295682, 3.96253, 0.00557622)
+transform = Transform3D(0.00112018, -0.999729, 0.0232361, 0.0481395, 0.0232631, 0.99857, -0.99884, 0, 0.0481525, 0.295682, 0.783014, 0.00557622)
 
 [node name="Gus_01" parent="." instance=ExtResource("3_vywaw")]
 transform = Transform3D(-0.99756, 0, -0.0698088, 0, 1, 0, 0.0698088, 0, -0.99756, -0.39434, 1.42404, 9.25845)

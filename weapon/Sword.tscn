@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://btjf7rrvndrvg"]
 
-[ext_resource type="Script" path="res://weapon/sword.gd" id="1_t81kh"]
+[ext_resource type="Script" path="res://weapon/weapon.gd" id="1_t81kh"]
 [ext_resource type="PackedScene" uid="uid://ljw4nvfpi33k" path="res://weapon/Sword_01.glb" id="1_ukulg"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hcdix"]
@@ -15,11 +15,13 @@ size = Vector3(0.280624, 0.10434, 0.0656738)
 [sub_resource type="BoxShape3D" id="BoxShape3D_t7i5g"]
 size = Vector3(0.0513246, 0.335373, 0.0656738)
 
-[node name="Sword" type="RigidBody3D"]
+[node name="Sword" type="RigidBody3D" node_paths=PackedStringArray("on_held_disable_colliders")]
 collision_layer = 1026
 collision_mask = 1665
 physics_material_override = SubResource("PhysicsMaterial_hcdix")
 script = ExtResource("1_t81kh")
+on_held_euler_rotation = Vector3(90, 0, 0)
+on_held_disable_colliders = [NodePath("Hilt"), NodePath("Handle")]
 
 [node name="Blade" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00167847, 0.626118, -0.00220108)

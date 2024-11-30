@@ -1,9 +1,9 @@
 extends CharacterBody3D
 
 signal toggle_right_hand_reach
+signal toggle_grip_right_hand
 
 # TODO: 
-# - ragdoll (waiting on model): https://docs.godotengine.org/en/stable/tutorials/physics/ragdoll_system.html
 # - interaction handling
 # 	- sharp weapon: able to freely move a sword using mouse
 # 		- slicing on high velocity impact, deformation on low vel impact: https://github.com/PiCode9560/Godot-4-Concave-Mesh-Slicer/tree/main
@@ -81,6 +81,8 @@ func _process(_delta: float) -> void:
 		
 	if Input.is_action_just_pressed("interactive_action_right_hand"):
 		toggle_right_hand_reach.emit()
+	if Input.is_action_just_pressed("toogle_grip_right_hand"):
+		toggle_grip_right_hand.emit()
 	
 
 func _physics_process(delta) -> void:
