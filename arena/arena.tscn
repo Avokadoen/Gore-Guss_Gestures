@@ -1,0 +1,128 @@
+[gd_scene load_steps=7 format=3 uid="uid://b4juu33oqbfsy"]
+
+[ext_resource type="PackedScene" uid="uid://d2wliewqlgh4n" path="res://arena/Arena.glb" id="1_t4rj0"]
+[ext_resource type="PackedScene" uid="uid://bds57m7iado0y" path="res://arena/Rockglb.glb" id="2_qfnv0"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_54x3g"]
+height = 2.34344
+radius = 14.7107
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_knvd7"]
+size = Vector3(1.38977, 1.19434, 1.08752)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_24pqw"]
+size = Vector3(4.37427, 7.26715, 0.313599)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lbih1"]
+size = Vector3(0.821656, 7.26715, 0.313599)
+
+[node name="ArenaStatic" type="StaticBody3D"]
+collision_layer = 132
+collision_mask = 0
+
+[node name="Arena" parent="." instance=ExtResource("1_t4rj0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.859)
+
+[node name="FloorCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00470787, -1.04722, -0.0114646)
+shape = SubResource("CylinderShape3D_54x3g")
+
+[node name="RockStatic" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.28348, 0)
+collision_layer = 132
+collision_mask = 0
+
+[node name="Rockglb" parent="RockStatic" instance=ExtResource("2_qfnv0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0938475, 0.427143, 0)
+
+[node name="RockCollider" type="CollisionShape3D" parent="RockStatic"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.194885, 0.097168, 0.00970459)
+shape = SubResource("BoxShape3D_knvd7")
+
+[node name="ArenaWalls" type="Area3D" parent="."]
+collision_layer = 132
+collision_mask = 0
+
+[node name="WallSection0" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.305786, 3.45664, 13.3888)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection1" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(0.934192, 0, -0.356771, 0, 1, 0, 0.356771, 0, 0.934192, -4.59664, 3.45664, 12.6707)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection2" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(0.979106, 0, 0.203351, 0, 1, 0, -0.203351, 0, 0.979106, 3.87911, 3.45664, 12.8132)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection3" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(0.581555, 0, 0.813507, 0, 1, 0, -0.813507, 0, 0.581555, 10.5837, 3.45664, 8.17432)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection4" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(0.833519, 0, 0.55249, 0, 1, 0, -0.55249, 0, 0.833519, 7.50409, 3.45664, 11.2473)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection5" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(0.403976, 0, 0.914769, 0, 1, 0, -0.914769, 0, 0.403976, 12.5492, 3.45664, 4.43511)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection6" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(-0.2208, 0, 0.975319, 0, 1, 0, -0.975319, 0, -0.2208, 13.1501, 3.93514, -3.56849)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection7" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(0.141696, 0, 0.98991, 0, 1, 0, -0.98991, 0, 0.141696, 13.3971, 3.93514, 0.775024)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection8" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(-0.414519, 0, 0.910042, 0, 1, 0, -0.910042, 0, -0.414519, 11.6647, 3.93514, -7.52301)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection9" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(-0.921837, 0, 0.38758, 0, 1, 0, -0.38758, 0, -0.921837, 5.65988, 3.93514, -13.0379)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection10" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(-0.722896, 0, 0.690958, 0, 1, 0, -0.690958, 0, -0.722896, 9.337, 3.93514, -10.7128)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection11" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(-0.98139, 0, 0.192025, 0, 1, 0, -0.192025, 0, -0.98139, 1.57899, 3.93514, -14.1292)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection12" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(-0.82087, 0, -0.571115, 0, 1, 0, 0.571115, 0, -0.82087, -7.08184, 3.69059, -12.0811)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection13" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(-0.970607, 0, -0.240669, 0, 1, 0, 0.240669, 0, -0.970607, -3.14949, 3.69059, -13.9423)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection14" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(-0.687582, 0, -0.726107, 0, 1, 0, 0.726107, 0, -0.687582, -10.1884, 3.69059, -9.21859)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection15" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(-0.0127754, 0, -0.999918, 0, 1, 0, 0.999918, 0, -0.0127754, -13.0426, 3.69059, -1.58158)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection16" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(-0.368676, 0, -0.929558, 0, 1, 0, 0.929558, 0, -0.368676, -12.2697, 3.69059, -5.8629)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection17" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(0.190827, 0, -0.981624, 0, 1, 0, 0.981624, 0, 0.190827, -12.5205, 3.69059, 2.61033)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection18" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(0.77107, 0, -0.636751, 0, 1, 0, 0.636751, 0, 0.77107, -8.19214, 3.60537, 10.286)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection19" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(0.493153, 0, -0.869943, 0, 1, 0, 0.869943, 0, 0.493153, -11.0434, 3.60537, 7.00008)
+shape = SubResource("BoxShape3D_24pqw")
+
+[node name="WallSection20" type="CollisionShape3D" parent="ArenaWalls"]
+transform = Transform3D(0.22536, 0, -0.974277, 0, 1, 0, 0.974277, 0, 0.22536, -13.1219, 2.83097, 5.25603)
+shape = SubResource("BoxShape3D_lbih1")
