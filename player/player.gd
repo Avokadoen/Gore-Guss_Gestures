@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal toggle_right_hand_reach
+
 # TODO: 
 # - ragdoll (waiting on model): https://docs.godotengine.org/en/stable/tutorials/physics/ragdoll_system.html
 # - interaction handling
@@ -76,6 +78,9 @@ func _process(_delta: float) -> void:
 			gus_skeleton.set_bone_pose_rotation(gus_head_id, Quaternion.from_euler(head_euler_rotation))
 		
 		turn_angle = Vector2.ZERO
+		
+	if Input.is_action_just_pressed("interactive_action_right_hand"):
+		toggle_right_hand_reach.emit()
 	
 
 func _physics_process(delta) -> void:
