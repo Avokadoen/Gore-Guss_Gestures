@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://0omksqhtuit3" path="res://player/gus.tscn" id="2_jbuvc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kcjcf"]
+resource_local_to_scene = true
+resource_name = "player_capsule"
 radius = 0.3
 height = 1.85
 
