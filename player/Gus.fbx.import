@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://tgkk4xsn2ty8"
-path="res://.godot/imported/Gus_01.glb-b7cae1f73a2703ec41b9a1f2756f1dc3.scn"
+uid="uid://b30x7y0syjgsp"
+path="res://.godot/imported/Gus.fbx-fc960e0c06653fbef311ba92c8a1116a.scn"
 
 [deps]
 
-source_file="res://player/Gus_01.glb"
-dest_files=["res://.godot/imported/Gus_01.glb-b7cae1f73a2703ec41b9a1f2756f1dc3.scn"]
+source_file="res://player/Gus.fbx"
+dest_files=["res://.godot/imported/Gus.fbx-fc960e0c06653fbef311ba92c8a1116a.scn"]
 
 [params]
 
@@ -27,10 +27,11 @@ meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
-animation/trimming=false
+animation/trimming=true
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
-gltf/naming_version=1
-gltf/embedded_image_handling=1
+fbx/importer=0
+fbx/allow_geometry_helper_nodes=false
+fbx/embedded_image_handling=1
