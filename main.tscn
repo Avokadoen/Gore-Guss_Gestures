@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cf3jn7axeyyuq"]
+[gd_scene load_steps=8 format=3 uid="uid://cf3jn7axeyyuq"]
 
 [ext_resource type="PackedScene" uid="uid://brfwky6yfn5fk" path="res://player.tscn" id="1_5lcmk"]
 [ext_resource type="PackedScene" uid="uid://btjf7rrvndrvg" path="res://weapon/Sword.tscn" id="2_ursj5"]
 [ext_resource type="PackedScene" uid="uid://0omksqhtuit3" path="res://player/gus.tscn" id="3_vywaw"]
-[ext_resource type="PackedScene" uid="uid://b30x7y0syjgsp" path="res://player/Gus.fbx" id="4_7q5ac"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ym5g8"]
 
@@ -44,6 +43,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 3.70103, 3.1341)
 
 [node name="Gus_01" parent="." instance=ExtResource("3_vywaw")]
 transform = Transform3D(-0.99756, 0, -0.0698088, 0, 1, 0, 0.0698088, 0, -0.99756, -0.39434, 1.42404, 3.40451)
-
-[node name="Gus" parent="." instance=ExtResource("4_7q5ac")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.385936, 1, 3.77893e-05)
+max_health = 0.0

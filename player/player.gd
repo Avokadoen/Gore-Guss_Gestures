@@ -47,7 +47,7 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	# ensure player camera is used as active camera
-	var main_camera: Camera3D = get_node("Gus_01/Main_Rig/Skeleton3D/BoneAttachment3D/EyeCamera")
+	var main_camera: Camera3D = get_node("Gus_01/Main_Rig/Skeleton3D/HeadAttachment/EyeCamera")
 	main_camera.make_current()
 
 
