@@ -16,6 +16,8 @@ size = Vector3(0.280624, 0.10434, 0.0656738)
 size = Vector3(0.0513246, 0.335373, 0.0656738)
 
 [node name="Sword" type="RigidBody3D"]
+collision_layer = 1026
+collision_mask = 1665
 physics_material_override = SubResource("PhysicsMaterial_hcdix")
 script = ExtResource("1_t81kh")
 

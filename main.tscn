@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://brfwky6yfn5fk" path="res://player.tscn" id="1_5lcmk"]
 [ext_resource type="PackedScene" uid="uid://btjf7rrvndrvg" path="res://weapon/Sword.tscn" id="2_ursj5"]
 [ext_resource type="PackedScene" uid="uid://0omksqhtuit3" path="res://player/gus.tscn" id="3_vywaw"]
-[ext_resource type="PackedScene" uid="uid://b4juu33oqbfsy" path="res://arena/arena.tscn" id="4_d22uo"]
+[ext_resource type="PackedScene" path="res://arena/arena.tscn" id="4_d22uo"]
 
 [node name="Root" type="Node"]
 
