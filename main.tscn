@@ -14,7 +14,7 @@ light_energy = 1.646
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("1_5lcmk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45637, -10.7802)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.07624, -10.7802)
 turn_rate = 0.001
 look_x_degree_limit_max = 50.0
 

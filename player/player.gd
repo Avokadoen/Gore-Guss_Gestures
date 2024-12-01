@@ -1,13 +1,14 @@
 extends CharacterBody3D
 
-signal toggle_right_hand_reach(char: CharacterBody3D, skel: Skeleton3D, head_id: int, turn_rate: float, look_x_degree_limit_min: float, look_x_degree_limit_max: float)
+signal toggle_right_hand_reach(character: CharacterBody3D, skel: Skeleton3D, head_id: int, turn_rate: float, look_x_degree_limit_min: float, look_x_degree_limit_max: float)
 signal toggle_grip_right_hand
+signal toggle_left_hand_reach(character: CharacterBody3D, skel: Skeleton3D, head_id: int, turn_rate: float, look_x_degree_limit_min: float, look_x_degree_limit_max: float)
+signal toggle_grip_left_hand
 
 # TODO: 
 # - interaction handling
 # 	- sharp weapon: able to freely move a sword using mouse
 # 		- slicing on high velocity impact, deformation on low vel impact: https://github.com/PiCode9560/Godot-4-Concave-Mesh-Slicer/tree/main
-# 	- able to drop any held item and pick up new item
 # 	- can control both hands (left and right mouse click)
 # 	- blunt weapon: 
 # 	- magic?
@@ -39,6 +40,7 @@ var capsule_original_height: float = 0
 var player_capsule: CollisionShape3D
 
 var is_right_hand_reach_active: bool = false
+var is_left_hand_reach_active: bool = false
 
 var gus_skeleton: Skeleton3D
 var gus_head_id: int
@@ -70,7 +72,7 @@ func _process(_delta: float) -> void:
 	if is_dead:
 		return
 	
-	if !is_right_hand_reach_active:
+	if !is_right_hand_reach_active and !is_left_hand_reach_active:
 		CharacterUtils.turnAround(self, gus_skeleton, gus_head_id, turn_angle, turn_rate, look_x_degree_limit_min, look_x_degree_limit_max)
 		
 	turn_angle = Vector2.ZERO
@@ -89,8 +91,13 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("interactive_action_right_hand"):
 		toggle_right_hand_reach.emit(self, gus_skeleton, gus_head_id, turn_rate, look_x_degree_limit_min, look_x_degree_limit_max)
 		is_right_hand_reach_active = !is_right_hand_reach_active
+	if Input.is_action_just_pressed("interactive_action_left_hand"):
+		toggle_left_hand_reach.emit(self, gus_skeleton, gus_head_id, turn_rate, look_x_degree_limit_min, look_x_degree_limit_max)
+		is_left_hand_reach_active = !is_left_hand_reach_active
 	if Input.is_action_just_pressed("toogle_grip_right_hand"):
 		toggle_grip_right_hand.emit()
+	if Input.is_action_just_pressed("toogle_grip_left_hand"):
+		toggle_grip_left_hand.emit()
 	
 
 func _physics_process(delta) -> void:
@@ -141,7 +148,7 @@ func _physics_process(delta) -> void:
 
 
 func _input(event):
-	if !is_right_hand_reach_active and event is InputEventMouseMotion:
+	if !is_right_hand_reach_active and !is_left_hand_reach_active and event is InputEventMouseMotion:
 		turn_angle += event.relative
 
 
