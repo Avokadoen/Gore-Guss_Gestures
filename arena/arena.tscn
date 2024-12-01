@@ -40,6 +40,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.194885, 0.097168, 0.009704
 shape = SubResource("BoxShape3D_knvd7")
 
 [node name="ArenaWalls" type="StaticBody3D" parent="."]
+collision_layer = 128
+collision_mask = 0
 
 [node name="WallSection0" type="CollisionShape3D" parent="ArenaWalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.305786, 3.45664, 13.3888)

@@ -9,12 +9,12 @@ class_name MeshSlicer
 
 @export var material: Material
 
-@export var slice_threshold: float = 0.08
-@export var slice_cooldown: float = 1
+@export var slice_threshold: float = 0.04
+@export var slice_cooldown: float = 0.0
 
 @onready var parent: Node3D = get_parent()
 
-var slice_timer: float = 0
+@onready var slice_timer: float = slice_cooldown
 
 func _physics_process(delta: float) -> void:
 	slice_timer += delta
@@ -75,21 +75,19 @@ func slice_mesh(slice_transform: Transform3D, mesh: Mesh, cross_section_material
 
 
 func _on_sword_body_entered(body: Node) -> void:
-	if slice_timer < slice_cooldown:
+	if can_slice() == false:
 		return
-	
-	if parent is Weapon:
-		if parent.held_velocity.length_squared() < slice_threshold:
-			return
-			
-		print(parent.held_velocity.length_squared())
-	else:
-		return
-	
+
 	slice_timer = 0
 	
 	#The plane transform at the rigidbody local transform
-	var mesh_instance = body.get_node("MeshInstance3D")
+	var mesh_instance: MeshInstance3D
+	if body.name.begins_with("Physical Bone"):
+		# TODO: hacky gus specific
+		mesh_instance = body.get_parent().get_parent().get_child(0, true)
+	else:
+		mesh_instance = body.get_node("MeshInstance3D")
+	
 	if mesh_instance == null:
 		return
 		
@@ -123,7 +121,11 @@ func _on_sword_body_entered(body: Node) -> void:
 	# second half of the mesh
 	var body2 = body.duplicate()
 	sliced_dest.add_child(body2)
-	mesh_instance = body2.get_node("MeshInstance3D")
+	if body.name.begins_with("Physical Bone"):
+		# TODO: hacky gus specific
+		mesh_instance = body.get_parent().get_parent().get_child(0, true)
+	else:
+		mesh_instance = body.get_node("MeshInstance3D")
 	collision = body2.get_node("CollisionShape3D")
 	mesh_instance.mesh = meshes[1]
 	body2.mass = mass2
@@ -140,3 +142,14 @@ func _on_sword_body_entered(body: Node) -> void:
 		body2.queue_free()
 	if aabb.size.length() < 0.3:
 		body.queue_free()
+		
+
+func can_slice() -> bool:
+	if slice_timer < slice_cooldown:
+		return false
+	
+	if parent is Weapon:
+		if parent.slice_velocity.length_squared() < slice_threshold:
+			return false
+	
+	return true

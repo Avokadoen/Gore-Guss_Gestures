@@ -15,7 +15,7 @@
 [node name="Sliced" type="Node3D" parent="."]
 
 [node name="TestSlice" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.637552, -4.29473)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.57387, -0.0427852)
 collision_layer = 128
 collision_mask = 128
 
@@ -36,7 +36,8 @@ turn_rate = 0.001
 look_x_degree_limit_max = 50.0
 
 [node name="Sword" parent="." node_paths=PackedStringArray("sliced_dest") instance=ExtResource("2_ursj5")]
-transform = Transform3D(0.00112018, -0.999729, 0.0232361, 0.0481395, 0.0232631, 0.99857, -0.99884, 0, 0.0481525, 0.55059, 0.666347, -0.213007)
+transform = Transform3D(0.00112018, -0.999729, 0.0232361, 0.0481395, 0.0232631, 0.99857, -0.99884, 0, 0.0481525, 0.55059, 11.2478, -0.000581622)
+linear_velocity = Vector3(0, -10, 0)
 sliced_dest = NodePath("../Sliced")
 
 [node name="Gus_01" parent="." instance=ExtResource("3_vywaw")]

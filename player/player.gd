@@ -9,7 +9,6 @@ signal toggle_grip_left_hand
 # - interaction handling
 # 	- sharp weapon: able to freely move a sword using mouse
 # 		- slicing on high velocity impact, deformation on low vel impact: https://github.com/PiCode9560/Godot-4-Concave-Mesh-Slicer/tree/main
-# 	- can control both hands (left and right mouse click)
 # 	- blunt weapon: 
 # 	- magic?
 # 	- env (doors, chests)

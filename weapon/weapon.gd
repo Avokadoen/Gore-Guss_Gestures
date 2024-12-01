@@ -16,16 +16,14 @@ class_name Weapon
 var is_held: bool = false
 
 var prev_pos: Vector3 = Vector3.ZERO
-var held_velocity: Vector3
+var slice_velocity: Vector3
 
 func _ready() -> void:
 	get_node("MeshSlicer").sliced_dest = sliced_dest
 	
 func _physics_process(_delta: float) -> void:
+	slice_velocity = prev_pos - global_position
 	# TODO: angular velocity should count as well! 
-	
-	held_velocity = prev_pos - global_position
-	
 	if is_held:
 		position = on_held_position
 		rotation_degrees = on_held_euler_rotation
