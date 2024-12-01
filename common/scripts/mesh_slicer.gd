@@ -9,7 +9,15 @@ class_name MeshSlicer
 
 @export var material: Material
 
+@export var slice_threshold: float = 0.08
+@export var slice_cooldown: float = 1
+
 @onready var parent: Node3D = get_parent()
+
+var slice_timer: float = 0
+
+func _physics_process(delta: float) -> void:
+	slice_timer += delta
 
 # Slice a mesh in half using Transform3D as the local position and direction. 
 # Return an array of the sliced meshes. 
@@ -67,6 +75,19 @@ func slice_mesh(slice_transform: Transform3D, mesh: Mesh, cross_section_material
 
 
 func _on_sword_body_entered(body: Node) -> void:
+	if slice_timer < slice_cooldown:
+		return
+	
+	if parent is Weapon:
+		if parent.held_velocity.length_squared() < slice_threshold:
+			return
+			
+		print(parent.held_velocity.length_squared())
+	else:
+		return
+	
+	slice_timer = 0
+	
 	#The plane transform at the rigidbody local transform
 	var mesh_instance = body.get_node("MeshInstance3D")
 	if mesh_instance == null:
