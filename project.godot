@@ -96,6 +96,10 @@ crouch={
 3d_physics/layer_18="ReachArea"
 3d_physics/layer_19="ReachPointer"
 
+[physics]
+
+3d/physics_engine="JoltPhysics3D"
+
 [rendering]
 
 environment/defaults/default_clear_color=Color(0.063073, 0.621253, 0.894645, 1)
