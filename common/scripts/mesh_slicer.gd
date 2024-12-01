@@ -72,6 +72,8 @@ func _on_sword_body_entered(body: Node) -> void:
 	if mesh_instance == null:
 		return
 		
+	var face_count: float = (mesh_instance as MeshInstance3D).mesh.get_faces().size()
+		
 	var transform = Transform3D.IDENTITY
 	transform.origin = mesh_instance.to_local(parent.global_transform.origin)
 	transform.basis.x = mesh_instance.to_local((parent.global_transform.basis.x + body.global_position))
@@ -87,75 +89,33 @@ func _on_sword_body_entered(body: Node) -> void:
 
 	mesh_instance.mesh = meshes[0]
 	
-	#generate collision
+	# generate collision
 	if len(meshes[0].get_faces()) > 2:
 		collision.shape = meshes[0].create_convex_shape()
 	
-	#adjust the rigidbody center of mass
-	body.center_of_mass_mode = 1
-	body.center_of_mass = body.to_local(mesh_instance.to_global(calculate_center_of_mass(meshes[0])))
-	
-	#recalculate mass
-	var volume1 = calculate_mesh_volume(meshes[0])
-	var volume2 = calculate_mesh_volume(meshes[1])
-	var total_volume = volume1 + volume2
-
-	var mass1 = body.mass * (volume1 / total_volume)
-	var mass2 = body.mass * (volume2 / total_volume)
+	# recalculate mass
+	var mass1 = body.mass * face_count / (meshes[0].get_faces().size() as float)
+	var mass2 = body.mass * face_count / (meshes[1].get_faces().size() as float)
 
 	body.mass = mass1
 	
-	
-	#second half of the mesh
+	# second half of the mesh
 	var body2 = body.duplicate()
-	print(body2.global_position)
 	sliced_dest.add_child(body2)
 	mesh_instance = body2.get_node("MeshInstance3D")
 	collision = body2.get_node("CollisionShape3D")
 	mesh_instance.mesh = meshes[1]
 	body2.mass = mass2
 	
-	#generate collision
+	# generate collision
 	if len(meshes[1].get_faces()) > 2:
 		collision.shape = meshes[1].create_convex_shape()
 
-	#get mesh size
+	# get mesh size
 	var aabb = meshes[0].get_aabb()
 	var aabb2 = meshes[1].get_aabb()
-	#queue_free() if the mesh is too small
+	# queue_free() if the mesh is too small
 	if aabb2.size.length() < 0.3:
 		body2.queue_free()
 	if aabb.size.length() < 0.3:
 		body.queue_free()
-		
-	#adjust the rigidbody center of mass
-	body2.center_of_mass = body2.to_local(mesh_instance.to_global(calculate_center_of_mass(meshes[1])))
-
-func calculate_center_of_mass(mesh:ArrayMesh):
-	#Not sure how well this work
-	var meshVolume = 0
-	var temp = Vector3(0,0,0)
-	for i in range(len(mesh.get_faces())/3):
-		var v1 = mesh.get_faces()[i]
-		var v2 = mesh.get_faces()[i+1]
-		var v3 = mesh.get_faces()[i+2]
-		var center = (v1 + v2 + v3) / 3
-		var volume = (Geometry3D.get_closest_point_to_segment_uncapped(v3,v1,v2).distance_to(v3)*v1.distance_to(v2))/2
-		meshVolume += volume
-		temp += center * volume
-	
-	if meshVolume == 0:
-		return Vector3.ZERO
-	return temp / meshVolume
-
-func calculate_mesh_volume(mesh: ArrayMesh) -> float:
-	var volume = 0.0
-	for surface in range(mesh.get_surface_count()):
-		var arrays = mesh.surface_get_arrays(surface)
-		var vertices = arrays[Mesh.ARRAY_VERTEX]
-		for i in range(0, vertices.size(), 3):
-			var v1 = vertices[i]
-			var v2 = vertices[i + 1]
-			var v3 = vertices[i + 2]
-			volume += abs(v1.dot(v2.cross(v3))) / 6.0
-	return volume
