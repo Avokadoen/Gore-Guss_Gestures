@@ -5,6 +5,8 @@ extends Node
 
 class_name MeshSlicer
 
+@export var sliced_dest: Node3D
+
 @export var material: Material
 
 @onready var parent: Node3D = get_parent()
@@ -13,9 +15,7 @@ class_name MeshSlicer
 # Return an array of the sliced meshes. 
 func slice_mesh(slice_transform: Transform3D, mesh: Mesh, cross_section_material: Material = null) -> Array[ArrayMesh]:
 	if not is_inside_tree():
-		#The node need to be in the tree for it to worked
-		push_error("This node is not inside the tree")
-		return [ArrayMesh.new(),ArrayMesh.new()]
+		return []
 	
 	var combiner = CSGCombiner3D.new() 
 	var obj_csg:CSGMesh3D = CSGMesh3D.new() # CSG that hold the main mesh
@@ -82,6 +82,8 @@ func _on_sword_body_entered(body: Node) -> void:
 	
 	#Slice the mesh
 	var meshes = slice_mesh(transform, mesh_instance.mesh, material)
+	if meshes.is_empty():
+		return
 
 	mesh_instance.mesh = meshes[0]
 	
@@ -107,7 +109,7 @@ func _on_sword_body_entered(body: Node) -> void:
 	#second half of the mesh
 	var body2 = body.duplicate()
 	print(body2.global_position)
-	$"../../Sliced".add_child(body2)
+	sliced_dest.add_child(body2)
 	mesh_instance = body2.get_node("MeshInstance3D")
 	collision = body2.get_node("CollisionShape3D")
 	mesh_instance.mesh = meshes[1]

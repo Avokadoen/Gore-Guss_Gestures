@@ -11,9 +11,6 @@ func _on_gus_toggle_grip_left_hand() -> void:
 		if gripped is Weapon:
 			gripped.on_released()
 		
-		if gripped is RigidBody3D:
-			gripped.freeze = false
-			
 		gripped.reparent(gripped_prev_root)
 		gripped = null
 		return
@@ -41,6 +38,3 @@ func _on_gus_toggle_grip_left_hand() -> void:
 	
 	if gripped is Weapon:
 		gripped.on_held()
-		
-	if gripped is RigidBody3D:
-		gripped.freeze = true

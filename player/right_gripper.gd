@@ -10,12 +10,6 @@ func _on_gus_toggle_grip_right_hand() -> void:
 	if gripped != null:
 		if gripped is Weapon:
 			gripped.on_released()
-		
-		if gripped is RigidBody3D:
-			gripped.freeze = false
-			
-		if gripped is PhysicalBone3D:
-			(gripped.get_parent() as PhysicalBoneSimulator3D).influence = 1
 			
 		gripped.reparent(gripped_prev_root)
 		gripped = null
@@ -44,6 +38,3 @@ func _on_gus_toggle_grip_right_hand() -> void:
 	
 	if gripped is Weapon:
 		gripped.on_held()
-	
-	if gripped is RigidBody3D:
-		gripped.freeze = true
