@@ -22,7 +22,7 @@ look_x_degree_limit_max = 50.0
 transform = Transform3D(0.00112018, -0.999729, 0.0232361, 0.0481395, 0.0232631, 0.99857, -0.99884, 0, 0.0481525, 0.295682, 0.783014, 0.00557622)
 
 [node name="Gus_01" parent="." instance=ExtResource("3_vywaw")]
-transform = Transform3D(-0.99756, 0, -0.0698088, 0, 1, 0, 0.0698088, 0, -0.99756, -0.39434, 1.42404, 9.25845)
+transform = Transform3D(-0.99756, 0, -0.0698088, -0.0698, 0.015847, 0.997435, 0.00110626, 0.999874, -0.0158083, -0.39434, 1.42404, 7.93425)
 max_health = 0.0
 
 [node name="ArenaStatic" parent="." instance=ExtResource("4_d22uo")]

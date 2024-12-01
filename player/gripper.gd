@@ -1,8 +1,7 @@
 extends Area3D
 
 @export var gripped_prev_root: Node = null
-@export var gripped: RigidBody3D = null
-
+@export var gripped: RigidBody3D = null	
 
 func _on_gus_toggle_grip_right_hand() -> void:
 	if gripped != null:

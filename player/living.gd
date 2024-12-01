@@ -1,7 +1,7 @@
 extends Node3D
 
 signal died
-signal toggle_right_hand_reach
+signal toggle_right_hand_reach(char: CharacterBody3D, skel: Skeleton3D, head_id: int, turn_rate: float, look_x_degree_limit_min: float, look_x_degree_limit_max: float)
 signal toggle_grip_right_hand
 
 @export var max_health: float = 100
@@ -23,8 +23,8 @@ func _process(_delta: float) -> void:
 		died.emit()
 
 
-func _on_player_toggle_right_hand_reach() -> void:
-	toggle_right_hand_reach.emit()
+func _on_player_toggle_right_hand_reach(character: CharacterBody3D, skel: Skeleton3D, head_id: int, turn_rate: float, look_x_degree_limit_min: float, look_x_degree_limit_max: float) -> void:
+	toggle_right_hand_reach.emit(character, skel, head_id, turn_rate, look_x_degree_limit_min, look_x_degree_limit_max)
 
 
 func _on_player_toggle_grip_right_hand() -> void:

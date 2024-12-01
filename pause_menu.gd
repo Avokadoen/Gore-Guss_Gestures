@@ -40,5 +40,5 @@ func _on_restart_pressed() -> void:
 func _on_quit_pressed() -> void:
 	get_tree().quit()
 
-func _process(delta):
+func _process(_delta):
 	testEsc()

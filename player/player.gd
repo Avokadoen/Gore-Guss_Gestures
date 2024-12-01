@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-signal toggle_right_hand_reach
+signal toggle_right_hand_reach(char: CharacterBody3D, skel: Skeleton3D, head_id: int, turn_rate: float, look_x_degree_limit_min: float, look_x_degree_limit_max: float)
 signal toggle_grip_right_hand
 
 # TODO: 
@@ -38,12 +38,13 @@ var is_crouch: bool = false
 var capsule_original_height: float = 0
 var player_capsule: CollisionShape3D
 
+var is_right_hand_reach_active: bool = false
+
 var gus_skeleton: Skeleton3D
 var gus_head_id: int
 
 var is_dead: bool = false
 
-var orientation: Transform3D = Transform3D()
 var turn_angle: Vector2 = Vector2.ZERO
 var target_velocity: Vector3 = Vector3.ZERO
 
@@ -51,7 +52,6 @@ func _ready() -> void:
 	gus_skeleton = get_node("Gus_01/Main_Rig/Skeleton3D")
 	gus_head_id = gus_skeleton.find_bone(player_skeleton_head_name)
 
-	orientation = global_transform
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	# ensure player camera is used as active camera
@@ -70,25 +70,13 @@ func _process(_delta: float) -> void:
 	if is_dead:
 		return
 	
-	# handle turning 
-	if turn_angle != Vector2.ZERO:
-		turn_angle *= turn_rate
-		rotate_y(-turn_angle.x)
+	if !is_right_hand_reach_active:
+		CharacterUtils.turnAround(self, gus_skeleton, gus_head_id, turn_angle, turn_rate, look_x_degree_limit_min, look_x_degree_limit_max)
 		
-		var head_euler_rotation: Vector3 = gus_skeleton.get_bone_pose_rotation(gus_head_id).normalized().get_euler(EULER_ORDER_YXZ)
-		var x_rotation_limit_min: float = deg_to_rad(look_x_degree_limit_min)
-		var x_rotation_limit_max: float = deg_to_rad(look_x_degree_limit_max)
-		
-		var is_higher_than_min_limit: bool =  head_euler_rotation.x >= x_rotation_limit_min 
-		var is_lower_than_max_limit: bool = head_euler_rotation.x <= x_rotation_limit_max
-		if (is_higher_than_min_limit and is_lower_than_max_limit):
-			head_euler_rotation.x = clamp(head_euler_rotation.x + turn_angle.y, x_rotation_limit_min + 0.1, x_rotation_limit_max - 0.1)
-			gus_skeleton.set_bone_pose_rotation(gus_head_id, Quaternion.from_euler(head_euler_rotation))
-		
-		turn_angle = Vector2.ZERO
+	turn_angle = Vector2.ZERO
 		
 	# handle crouch 
-	if Input.is_action_pressed("crouch"):
+	if Input.is_action_just_pressed("crouch"):
 		is_crouch = !is_crouch
 		var capsule_res = player_capsule.shape as CapsuleShape3D
 		if is_crouch:
@@ -99,7 +87,8 @@ func _process(_delta: float) -> void:
 			position.y += (capsule_original_height - capsule_res.height) * 0.5
 		
 	if Input.is_action_just_pressed("interactive_action_right_hand"):
-		toggle_right_hand_reach.emit()
+		toggle_right_hand_reach.emit(self, gus_skeleton, gus_head_id, turn_rate, look_x_degree_limit_min, look_x_degree_limit_max)
+		is_right_hand_reach_active = !is_right_hand_reach_active
 	if Input.is_action_just_pressed("toogle_grip_right_hand"):
 		toggle_grip_right_hand.emit()
 	
@@ -152,7 +141,7 @@ func _physics_process(delta) -> void:
 
 
 func _input(event):
-	if event is InputEventMouseMotion:
+	if !is_right_hand_reach_active and event is InputEventMouseMotion:
 		turn_angle += event.relative
 
 
