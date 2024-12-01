@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://btjf7rrvndrvg"]
+[gd_scene load_steps=9 format=3 uid="uid://btjf7rrvndrvg"]
 
 [ext_resource type="Script" path="res://weapon/weapon.gd" id="1_t81kh"]
 [ext_resource type="PackedScene" uid="uid://ljw4nvfpi33k" path="res://weapon/Sword_01.glb" id="1_ukulg"]
+[ext_resource type="Script" path="res://common/scripts/mesh_slicer.gd" id="3_q0gdl"]
+[ext_resource type="Material" uid="uid://uw7wjj6cc3il" path="res://weapon/placeholder_slice.tres" id="4_b5ca4"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_hcdix"]
 bounce = 0.09
@@ -19,6 +21,8 @@ size = Vector3(0.0513246, 0.335373, 0.0656738)
 collision_layer = 1026
 collision_mask = 1671
 physics_material_override = SubResource("PhysicsMaterial_hcdix")
+contact_monitor = true
+max_contacts_reported = 4
 script = ExtResource("1_t81kh")
 on_held_euler_rotation = Vector3(90, 0, 0)
 on_held_disable_colliders = [NodePath("Hilt"), NodePath("Handle")]
@@ -36,4 +40,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00582683, -0.0213991, -0.00
 shape = SubResource("BoxShape3D_t7i5g")
 
 [node name="Sword_01" parent="." instance=ExtResource("1_ukulg")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0107291, 0)
+
+[node name="MeshSlicer" type="Node" parent="."]
+script = ExtResource("3_q0gdl")
+material = ExtResource("4_b5ca4")
+
+[connection signal="body_entered" from="." to="MeshSlicer" method="_on_sword_body_entered"]

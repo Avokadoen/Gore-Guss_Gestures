@@ -4,14 +4,19 @@ class_name RightGripper
 
 @export var left_gripper: LeftGripper 
 @export var gripped_prev_root: Node = null
-@export var gripped: RigidBody3D = null
+@export var gripped: PhysicsBody3D = null
 
 func _on_gus_toggle_grip_right_hand() -> void:
 	if gripped != null:
 		if gripped is Weapon:
 			gripped.on_released()
 		
-		gripped.freeze = false
+		if gripped is RigidBody3D:
+			gripped.freeze = false
+			
+		if gripped is PhysicalBone3D:
+			(gripped.get_parent() as PhysicalBoneSimulator3D).influence = 1
+			
 		gripped.reparent(gripped_prev_root)
 		gripped = null
 		return
@@ -33,12 +38,12 @@ func _on_gus_toggle_grip_right_hand() -> void:
 	gripped_prev_root = pickme.get_parent_node_3d()
 	if gripped_prev_root == null:
 		gripped_prev_root = get_tree().current_scene
-		
+	
 	pickme.reparent(self, true)
 	gripped = pickme
 	
 	if gripped is Weapon:
 		gripped.on_held()
 	
-	gripped.freeze = true
-	
+	if gripped is RigidBody3D:
+		gripped.freeze = true

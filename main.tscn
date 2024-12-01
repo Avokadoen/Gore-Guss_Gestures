@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cf3jn7axeyyuq"]
+[gd_scene load_steps=8 format=3 uid="uid://cf3jn7axeyyuq"]
 
 [ext_resource type="PackedScene" uid="uid://brfwky6yfn5fk" path="res://player.tscn" id="1_5lcmk"]
 [ext_resource type="PackedScene" uid="uid://btjf7rrvndrvg" path="res://weapon/Sword.tscn" id="2_ursj5"]
@@ -6,7 +6,24 @@
 [ext_resource type="PackedScene" uid="uid://b4juu33oqbfsy" path="res://arena/arena.tscn" id="4_d22uo"]
 [ext_resource type="PackedScene" uid="uid://da2ybtiwxg4cx" path="res://pause_menu.tscn" id="5_2p8yx"]
 
+[sub_resource type="SphereMesh" id="SphereMesh_s7lc7"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4jyeg"]
+
 [node name="Root" type="Node"]
+
+[node name="Sliced" type="Node3D" parent="."]
+
+[node name="TestSlice" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.637552, -4.29473)
+collision_layer = 128
+collision_mask = 128
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TestSlice"]
+mesh = SubResource("SphereMesh_s7lc7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestSlice"]
+shape = SubResource("SphereShape3D_4jyeg")
 
 [node name="SkyLight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.64679, 0.762668, 0, -0.762668, 0.64679, 0, 7.93391, 0)
@@ -19,7 +36,7 @@ turn_rate = 0.001
 look_x_degree_limit_max = 50.0
 
 [node name="Sword" parent="." instance=ExtResource("2_ursj5")]
-transform = Transform3D(0.00112018, -0.999729, 0.0232361, 0.0481395, 0.0232631, 0.99857, -0.99884, 0, 0.0481525, 0.295682, 0.783014, 0.00557622)
+transform = Transform3D(0.00112018, -0.999729, 0.0232361, 0.0481395, 0.0232631, 0.99857, -0.99884, 0, 0.0481525, 0.691644, 6.40338, -4.1407)
 
 [node name="Gus_01" parent="." instance=ExtResource("3_vywaw")]
 transform = Transform3D(-0.99756, 0, -0.0698088, -0.0698, 0.015847, 0.997435, 0.00110626, 0.999874, -0.0158083, -0.39434, 1.42404, 7.93425)

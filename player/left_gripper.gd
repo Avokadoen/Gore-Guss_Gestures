@@ -4,14 +4,16 @@ class_name LeftGripper
 
 @export var right_gripper: RightGripper 
 @export var gripped_prev_root: Node = null
-@export var gripped: RigidBody3D = null
+@export var gripped: PhysicsBody3D = null
 
 func _on_gus_toggle_grip_left_hand() -> void:
 	if gripped != null:
 		if gripped is Weapon:
 			gripped.on_released()
 		
-		gripped.freeze = false
+		if gripped is RigidBody3D:
+			gripped.freeze = false
+			
 		gripped.reparent(gripped_prev_root)
 		gripped = null
 		return
@@ -39,6 +41,6 @@ func _on_gus_toggle_grip_left_hand() -> void:
 	
 	if gripped is Weapon:
 		gripped.on_held()
-	
-	gripped.freeze = true
-	
+		
+	if gripped is RigidBody3D:
+		gripped.freeze = true
