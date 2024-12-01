@@ -1,0 +1,58 @@
+[gd_scene load_steps=11 format=3 uid="uid://b28u4sfyynk6d"]
+
+[ext_resource type="Shader" uid="uid://b7ghhpl8eabtv" path="res://particles/simple_shader.tres" id="1_i7l88"]
+[ext_resource type="Texture2D" uid="uid://bm7ooobwgw1rl" path="res://particles/Blood_Splat.png" id="2_xc7xk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ogbhd"]
+render_priority = 0
+shader = ExtResource("1_i7l88")
+shader_parameter/Hit_Texture = ExtResource("2_xc7xk")
+
+[sub_resource type="Gradient" id="Gradient_defrx"]
+offsets = PackedFloat32Array(0, 0.515306, 1)
+colors = PackedColorArray(0.984314, 0, 0, 0, 0.529412, 0, 0, 1, 0.305882, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_idiny"]
+gradient = SubResource("Gradient_defrx")
+
+[sub_resource type="Curve" id="Curve_r8rcs"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_iqccj"]
+curve = SubResource("Curve_r8rcs")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yl1sl"]
+angle_min = -180.0
+angle_max = 180.0
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 4.99998
+scale_min = 0.8
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_iqccj")
+color_ramp = SubResource("GradientTexture1D_idiny")
+turbulence_noise_strength = 11.7
+collision_use_scale = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rwp6h"]
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_cb1fb"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_rwp6h")
+
+[node name="Blood" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+material_override = SubResource("ShaderMaterial_ogbhd")
+emitting = false
+amount = 12
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_yl1sl")
+draw_pass_1 = SubResource("QuadMesh_cb1fb")
